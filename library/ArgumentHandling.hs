@@ -11,7 +11,7 @@ parse ["--help"]    = usage >> exit
 parse []            = die84
 parse args          =
     if not (isValidExpression args)
-        then exit
+        then die84
         else return()
 
 usage :: IO ()
@@ -23,8 +23,6 @@ die84   = exitWith (ExitFailure 84)
 
 isValidExpression :: [String] -> Bool
 isValidExpression args =
-    if (length args == 3)
+    if (length args == 1)
         then True
         else False
-    --putStrLn "hello"
-    --False

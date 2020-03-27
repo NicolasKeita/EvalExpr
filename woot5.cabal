@@ -1,0 +1,80 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.1.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: b05ca025216bdeef427bd0c7668e72fecf64c7dde73fde00cfd3e18173e41bc9
+
+name:           woot5
+version:        0.0.0
+homepage:       https://github.com/NicolasKeita/woot5#readme
+bug-reports:    https://github.com/NicolasKeita/woot5/issues
+author:         NicolasKeita
+maintainer:     NicolasKeita
+license:        MIT
+build-type:     Simple
+extra-source-files:
+    CHANGELOG.md
+    LICENSE.md
+    package.yaml
+    README.md
+    stack.yaml
+
+source-repository head
+  type: git
+  location: https://github.com/NicolasKeita/woot5
+
+library
+  exposed-modules:
+      ArgumentHandling
+      EvalExpr
+  other-modules:
+      Paths_woot5
+  hs-source-dirs:
+      library
+  ghc-options: -Wall
+  build-depends:
+      base
+  default-language: Haskell2010
+
+executable woot5
+  main-is: Main.hs
+  other-modules:
+      Paths_woot5
+  hs-source-dirs:
+      executable
+  ghc-options: -Wall -rtsopts -threaded -with-rtsopts=-N
+  build-depends:
+      base
+    , woot5
+  default-language: Haskell2010
+
+test-suite woot5-test-suite
+  type: exitcode-stdio-1.0
+  main-is: Main.hs
+  other-modules:
+      Paths_woot5
+  hs-source-dirs:
+      test-suite
+  ghc-options: -Wall -rtsopts -threaded -with-rtsopts=-N
+  build-depends:
+      base
+    , tasty
+    , tasty-hspec
+    , woot5
+  default-language: Haskell2010
+
+benchmark woot5-benchmarks
+  type: exitcode-stdio-1.0
+  main-is: Main.hs
+  other-modules:
+      Paths_woot5
+  hs-source-dirs:
+      benchmark
+  ghc-options: -Wall -rtsopts -threaded -with-rtsopts=-N
+  build-depends:
+      base
+    , criterion
+    , woot5
+  default-language: Haskell2010

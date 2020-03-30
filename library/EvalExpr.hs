@@ -1,11 +1,9 @@
--- | An example module.
 module EvalExpr (main) where
 import Control.Applicative ((<$>), (<*>))
 
 
-main :: IO ()
-
-main = print $ calculate "3 + 4 * 4"
+main :: String -> IO ()
+main expression = print $ calculate expression
 
 type Operator = Double -> Double -> Double
 type Entry = (String, Operator)
@@ -16,17 +14,15 @@ modulu a b = fromIntegral $ mod (round a) (round b)
 
 operatorRegister :: Register
 operatorRegister = [
-                ("-", (-)),
                 ("+", (+)),
-                ("/", (/)),
+                ("-", (-)),
                 ("*", (*)),
+                ("/", (/)),
                 ("%", modulu)
             ]
 
 calculate :: String -> Maybe Double
 calculate = eval operatorRegister . words
--- calculate = do
---  return 3.0 + 2.
 
 eval :: Register -> [String] -> Maybe Double
 eval [] _ = Nothing -- No operator found.

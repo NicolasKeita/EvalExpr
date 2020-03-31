@@ -23,7 +23,11 @@ calculate :: String -> Maybe Double
 calculate expression = eval operatorRegister (splitExpression expression)
 
 splitExpression :: String -> [String]
-splitExpression expression =  words expression
+splitExpression expression = [ w | w <- words expression, all isAuthorized w ]
+
+isAuthorized :: Char -> Bool
+isAuthorized character = character `elem` authorizedCharacters
+
 
 eval :: Register -> [String] -> Maybe Double
 eval [] _ = Nothing
@@ -36,3 +40,6 @@ eval ((operator, function):rest) unparsed =
             function
                 <$> eval operatorRegister beforeOperator
                 <*> eval operatorRegister (drop 1 afterOperator)
+
+authorizedCharacters :: String
+authorizedCharacters = "0123456789().+-/*%"

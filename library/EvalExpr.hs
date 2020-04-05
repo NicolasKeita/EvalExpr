@@ -1,15 +1,21 @@
 module EvalExpr (main) where
 import Control.Applicative ((<$>), (<*>))
+import System.Environment
+import System.Exit
 import Data.Fixed
 import Text.Printf
 
 round6dp :: Double -> Double
 round6dp x = fromIntegral (round $ x * 1e2) / 1e2
 
+die84 :: IO ()
+die84   = exitWith (ExitFailure 84)
+
 main :: String -> IO ()
-main expression = printf "%.2f" (case calculate expression of
-    Just n -> round6dp n 
-    Nothing -> 0)
+main expression = case calculate expression of
+--main expression = printf "%.2f" (case calculate expression of
+    Just n -> printf "%.2f" (round6dp n) 
+    Nothing -> die84
 --main expression = print (calculate expression)
 
 type Operator = Double -> Double -> Double

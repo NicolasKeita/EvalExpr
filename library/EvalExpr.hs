@@ -1,10 +1,16 @@
 module EvalExpr (main) where
 import Control.Applicative ((<$>), (<*>))
 import Data.Fixed
+import Text.Printf
 
+round6dp :: Double -> Double
+round6dp x = fromIntegral (round $ x * 1e2) / 1e2
 
 main :: String -> IO ()
-main expression = print (calculate expression)
+main expression = printf "%.2f" (case calculate expression of
+    Just n -> round6dp n 
+    Nothing -> 0)
+--main expression = print (calculate expression)
 
 type Operator = Double -> Double -> Double
 type Entry = (String, Operator)
@@ -28,10 +34,9 @@ splitExpression expression = [ w | w <- words expression, all isAuthorized w ]
 isAuthorized :: Char -> Bool
 isAuthorized character = character `elem` authorizedCharacters
 
-
 eval :: Register -> [String] -> Maybe Double
 eval [] _ = Nothing
-eval _ [] = Nothing -- If a operator don't have anything to operate on.
+eval _ [] = Nothing
 eval _ [number] = Just (read number)
 eval ((operator, function):rest) unparsed =
     case span (/=operator) unparsed of

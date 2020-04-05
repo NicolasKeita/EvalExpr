@@ -43,7 +43,8 @@ modifExpressionMod = replace "%" " % "
 
 main :: String -> IO ()
 main expression = case calculate (modifExpression expression) of
-    Just n -> printf "%.2f" (round6dp n) 
+    Just n | isInfinite n -> die84
+    Just n -> printf "%.2f" (round6dp n)
     Nothing -> die84
 
 type Operator = Double -> Double -> Double

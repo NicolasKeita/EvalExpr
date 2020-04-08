@@ -3,6 +3,7 @@ import Control.Applicative ((<$>), (<*>))
 import System.Exit
 import Data.Fixed
 import Text.Printf
+import Text.Read
 
 round6dp :: Double -> Double
 round6dp x = fromIntegral (round $ x * 1e2) / 1e2
@@ -72,7 +73,9 @@ isAuthorized character = character `elem` authorizedCharacters
 eval :: Register -> [String] -> Maybe Double
 eval [] _ = Nothing
 eval _ [] = Nothing
-eval _ [number] = Just (read number)
+eval _ [number] = Just (case readMaybe number of
+    Just n -> n
+    Nothing -> 1/0)
 eval ((operator, function):rest) unparsed =
     case span (/=operator) unparsed of
         (_, []) -> eval rest unparsed
